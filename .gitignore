@@ -1,0 +1,4 @@
+upesbackend/node_modules
+upesfrontend/node_modules
+upesfrontend/.env
+upesbackend/.env
