@@ -10,10 +10,13 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleLogin = async () => {
+    setLoading(true);
+    setError(false);
     dispatch(loginRequest());
     try {
       const res = await axios.post(
@@ -26,8 +29,11 @@ const Login = () => {
       navigate("/");
     } catch (err) {
       setError(true);
+      dispatch(loginFail());
       console.log(err);
       alert(err?.response?.data?.message);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -59,9 +65,10 @@ const Login = () => {
           />
           <button
             onClick={handleLogin}
-            className="w-full px-4 py-4 text-lg font-bold text-white bg-black rounded-lg hover:bg-gray-500 hover:text-black "
+            disabled={loading}
+            className="w-full px-4 py-4 text-lg font-bold text-white bg-black rounded-lg hover:bg-gray-500 hover:text-black disabled:bg-gray-400 disabled:cursor-not-allowed"
           >
-            Log in
+            {loading ? "Logging in..." : "Log in"}
           </button>
           {error && (
             <h3 className="text-red-500 text-sm ">Something went wrong</h3>
