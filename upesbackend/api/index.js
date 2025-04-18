@@ -31,7 +31,12 @@ const connectDB = async () => {
 // Middlewares
 app.use(express.json());
 app.use("/images", express.static(path.join(__dirname, "/images")));
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(
+  cors({
+    origin: "https://collagebloggin-vishal.netlify.app",
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 app.get("/test", (req, res) => {
   res.send("backend succesfully working brother");
